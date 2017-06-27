@@ -7,13 +7,16 @@ import org.firstglobal.teamcode.opmodes.GlobalRobot;
  */
 
 
-public class dropOrange extends GlobalRobot {
+public class DropOrange extends GlobalRobot {
 
+    double servoOrangePosition;
     double servoOrangeOpenPosition = 0.6;
     double servoOrangeZeroPosition = 0.3;
     double servoOrangeReversePosition = 0.1;
+
     double range = 0.05;
-    double servoOrangePosition;
+
+
 
     private boolean randomOrangeBalls = false;
 

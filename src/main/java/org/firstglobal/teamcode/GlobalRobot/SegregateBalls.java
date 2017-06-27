@@ -10,43 +10,50 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class SegregateBalls extends GlobalRobot {
 
-    private double servoMillCenter = 0.50;
+    private DropOrange dropOrange;
+    private DropBlue dropBlue;
+    private 
 
     public SegregateBalls() {
-
+        dropOrange = new DropOrange();
+        dropBlue = new DropBlue();
     }
 
     public void segregateLoop() {
 
         double distanceL = robot.colorSensorCenter.getDistance(DistanceUnit.CM);
 
+
         if (gamepad1.left_bumper || gamepad2.left_bumper || gamepad1.right_bumper || gamepad2.right_bumper) {
 
             if (gamepad1.left_bumper || gamepad2.left_bumper) {
-                millServoPosition(servoMillCenter + 0.15);
+                millServoPosition(GlobalRobot.SERVOMILLCENTER + 0.15);
             } else if (gamepad1.right_bumper || gamepad2.right_bumper) {
-                millServoPosition(servoMillCenter - 0.1);
+                millServoPosition(GlobalRobot.SERVOMILLCENTER - 0.1);
             }
 
         } else {
 
             if (distanceL < 20) {
                 if (robot.colorSensorCenter.blue() > robot.colorSensorCenter.red())
-
                 {
-                    millServoPosition(servoMillCenter + 0.2);
+                    millServoPosition(GlobalRobot.SERVOMILLCENTER + 0.2);
+                    dropBlue.setRandomBlueBalls(true);
                 } else {
-                    millServoPosition(servoMillCenter - 0.15);
+                    millServoPosition(GlobalRobot.SERVOMILLCENTER - 0.15);
+                    dropOrange.setRandomOrangeBalls(true);
                 }
             } else {
 
-                millServoPosition(servoMillCenter);
+                dropBlue.setRandomBlueBalls(false);
+                dropOrange.setRandomOrangeBalls(false);
+                millServoPosition(GlobalRobot.SERVOMILLCENTER);
             }
         }
     }
 
 
-    public void millServoPosition(double position) {
+    private void millServoPosition(double position) {
         robot.servoMill.setPosition(position);
     }
 
