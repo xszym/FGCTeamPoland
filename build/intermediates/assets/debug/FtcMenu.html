@@ -1,0 +1,94 @@
+<!--
+Copyright (c) 2017 DEKA Research and Development
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted
+(subject to the limitations in the disclaimer below) provided that the following conditions are
+met:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions
+and the following disclaimer.
+
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions
+and the following disclaimer in the documentation and/or other materials provided with the
+distribution.
+
+Neither the name of DEKA Research and Development nor the names of contributors may be used to
+endorse or promote products derived from this software without specific prior written permission.
+
+NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE. THIS
+SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
+THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<!DOCTYPE html>
+<html>
+<!--
+  Author: shager.
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link href="bootstrap.min.css" rel="stylesheet"><!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <title>FTC - Menu</title>
+
+    <style>
+        a {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body style="background: #003366" onload="init()">
+<div class="container-fluid" style="background: #081E44">
+    <div class="row" style="min-height: 40px; max-height: 40px">
+        <div class="col-xs-10">
+            <img src="FIRST_RI_logo.png" style="margin-top: 14px; margin-left: 5px" height="11" width="147"/>
+        </div>
+        <div class="col-xs-2" onclick="location.assign('/FtcSettings.html')">
+            <img class="pull-right" style="cursor: pointer; margin-top: 5px; margin-right: 36px" src="gear.png" height="30" width="30"/>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row" style="margin-top: 14%; margin-bottom: 2%">
+        <div class="col-sm-4 col-sm-offset-2" style="text-align: center">
+            <img style="cursor: pointer" onclick="location.assign('/FtcProjects.html')" src="program.png"  width="50%" height="50%"/>
+            <br><br>
+            <span style="font-size: 24pt; color: #70f6ff">Program</span>
+            <br><br>
+        </div>
+        <div class="col-sm-4" style="text-align: center">
+            <img id="enabled" style="cursor: pointer; display: none" onclick="location.assign('/FtcDriverStation')" src="drive.png" width="50%" height="50%"/>
+            <img id="disabled" style="display: none" src="disabledDrive.png"  width="50%" height="50%"/>
+            <br><br>
+            <span id="display" style="font-size: 24pt; color: #70f6ff; display: none">Driver Station</span>
+            <br><br>
+        </div>
+    </div>
+</div>
+<script>
+    function init() {
+        if (isDriveButtonEnabled()) {
+            document.querySelector('#enabled').style.display = "inline";
+        }
+        else {
+            document.querySelector('#disabled').style.display = "inline";
+        }
+        document.querySelector('#display').style.display = "inline";
+    }
+</script>
+</body>
+</html>

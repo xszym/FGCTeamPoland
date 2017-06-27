@@ -1,0 +1,46 @@
+[
+    {
+        "merged": "C:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\res\\merged\\debug\\raw\\warningmessage.wav",
+        "source": "C:\\Users\\dell\\.android\\build-cache\\17010b862b64879c2f44c985cd48c3f5ec90bf20\\output\\res\\raw\\warningmessage.wav"
+    },
+    {
+        "merged": "C:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\res\\merged\\debug\\raw\\simple_vertex_shader.glsl",
+        "source": "C:\\Users\\dell\\.android\\build-cache\\dfac32c23eac374c4d8274c6a6947a446924950a\\output\\res\\raw\\simple_vertex_shader.glsl"
+    },
+    {
+        "merged": "C:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\res\\merged\\debug\\raw\\chimedisconnect.wav",
+        "source": "C:\\Users\\dell\\.android\\build-cache\\17010b862b64879c2f44c985cd48c3f5ec90bf20\\output\\res\\raw\\chimedisconnect.wav"
+    },
+    {
+        "merged": "C:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\res\\merged\\debug\\raw\\cube_mesh_fragment_shader.glsl",
+        "source": "C:\\Users\\dell\\.android\\build-cache\\dfac32c23eac374c4d8274c6a6947a446924950a\\output\\res\\raw\\cube_mesh_fragment_shader.glsl"
+    },
+    {
+        "merged": "C:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\res\\merged\\debug\\raw\\chimeconnect.wav",
+        "source": "C:\\Users\\dell\\.android\\build-cache\\17010b862b64879c2f44c985cd48c3f5ec90bf20\\output\\res\\raw\\chimeconnect.wav"
+    },
+    {
+        "merged": "C:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\res\\merged\\debug\\raw\\color_fragment_shader.glsl",
+        "source": "C:\\Users\\dell\\.android\\build-cache\\dfac32c23eac374c4d8274c6a6947a446924950a\\output\\res\\raw\\color_fragment_shader.glsl"
+    },
+    {
+        "merged": "C:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\res\\merged\\debug\\raw\\nxtstartupsound.wav",
+        "source": "C:\\Users\\dell\\.android\\build-cache\\17010b862b64879c2f44c985cd48c3f5ec90bf20\\output\\res\\raw\\nxtstartupsound.wav"
+    },
+    {
+        "merged": "C:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\res\\merged\\debug\\raw\\texture_vertex_shader.glsl",
+        "source": "C:\\Users\\dell\\.android\\build-cache\\dfac32c23eac374c4d8274c6a6947a446924950a\\output\\res\\raw\\texture_vertex_shader.glsl"
+    },
+    {
+        "merged": "C:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\res\\merged\\debug\\raw\\errormessage.wav",
+        "source": "C:\\Users\\dell\\.android\\build-cache\\17010b862b64879c2f44c985cd48c3f5ec90bf20\\output\\res\\raw\\errormessage.wav"
+    },
+    {
+        "merged": "C:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\res\\merged\\debug\\raw\\cube_mesh_vertex_shader.glsl",
+        "source": "C:\\Users\\dell\\.android\\build-cache\\dfac32c23eac374c4d8274c6a6947a446924950a\\output\\res\\raw\\cube_mesh_vertex_shader.glsl"
+    },
+    {
+        "merged": "C:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\res\\merged\\debug\\raw\\texture_fragment_shader.glsl",
+        "source": "C:\\Users\\dell\\.android\\build-cache\\dfac32c23eac374c4d8274c6a6947a446924950a\\output\\res\\raw\\texture_fragment_shader.glsl"
+    }
+]

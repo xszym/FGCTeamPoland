@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <title>Software</title>
+</head>
+<body style="background: #003366" onload="init()">
+<div class="container-fluid" style="background: #081E44">
+    <div class="row" style="min-height: 40px; max-height: 40px">
+        <div class="col-xs-10">
+            <img onclick="location.assign('/FtcSettings.html')" src="FIRST_RI_logo.png" style="margin-top: 14px; margin-left: 5px" height="11" width="147"/>
+        </div>
+        <div class="col-xs-2" onclick="location.assign('/FtcMenu.html')" >
+            <span class="pull-right" style="width: 40px; height: 40px; background-color: #003366; margin-right: 31px; z-index: 100">&nbsp
+            <img class="pull-right" style="margin-top: 5px; margin-right: 5px; background-color: #003366; z-index: 99" src="gear.png" height="30" width="30"/>
+            </span>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div id="initialUploadDialog" class="row" style="margin-top: 5%; text-align: center">
+        <div class="col-xs-12">
+            <span style="font-size: 32pt; color: #70f6ff">Upload Software</span>
+        </div>
+        <br><br><br>
+        <div class="col-xs-12">
+            <span style="font-family: 'Courier New', Courier, monospace; font-size: 16pt; color:#70f6ff;">Upload <span class="fileType"></span> to your robot control hub.</span>
+        </div>
+    </div>
+    <div id="installAPKDialog" class="row" style="margin-top: 5%; text-align: center; display: none">
+        <div class="col-xs-12">
+            <span style="font-size: 32pt; color: #70f6ff">Installing APK</span>
+        </div>
+        <br><br><br>
+        <div class="col-xs-12">
+        <span style="font-family: 'Courier New', Courier, monospace; font-size: 16pt; color:#70f6ff;">Robot will reboot</span>
+        </div>
+    </div>
+    <div id="selection" class="row" style="margin-top: 4%; margin-bottom: 2%; text-align: center;">
+        <div class="col-xs-12" style="text-align: center; margin-bottom: 45px;">
+            <div>
+                <span style="font-size: 36pt; color: #70f6ff">Select <span class="fileType"></span> file:</span>
+                <br><br>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <img onclick="selectInputFileElement('#fileInput')" style="cursor: pointer" src="searchBar.png"  width="280px"/>
+                        <input id="fileInput" type="file" style="display: none">
+                        <div style="width:100%; position: absolute; top: 10px; right: 42px">
+                            <span class="fileNameText" style="color: #70f6ff; cursor: pointer; font-size: 11pt"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="row" style="margin-top: 15%">
+                <div id="upload" onclick="doUpload()" class="col-md-6 col-md-push-6" style="cursor: pointer; margin-top: 10px">
+                    <img src="primaryButton.png" width="200px"  style="cursor: pointer;">
+                    <div style="width: 100%; position: absolute; top: 7px; left: 1px">
+                        <span style="color: #003366; cursor: pointer; font-size: 14pt">Upload</span>
+                    </div>
+                </div>
+                <div onclick="location.assign('/FtcSettings.html')" class="col-md-6 col-md-pull-6" style="cursor: pointer; margin-top: 10px">
+                    <img  src="primaryButton.png" width="200px" style="cursor: pointer;">
+                    <div style="width: 100%; position: absolute; top: 7px; left: 1px">
+                        <span style="color: #003366; cursor: pointer; font-size: 14pt">Back</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!---->
+<!--progress dialog-->
+<!---->
+<div id="progressDialog" class="container-fluid" style="display: none">
+    <div class="row">
+        <div class="col-xs-12">
+            &nbsp
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            &nbsp
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            &nbsp
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            &nbsp
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1">
+            <div class="progress" style="background: #003366; border: solid 1px #00ffff">
+                <div id="progressBar" class="progress-bar" role="progressbar"
+                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="1"
+                     style="width: 0; background-color: #00ffff;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="warningDialog" class="row" style="display: none">
+        <div class="row">
+            <div class="col-xs-12">
+                &nbsp
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                &nbsp
+            </div>
+        </div>
+        <div class="col-xs-12" style="text-align: center">
+            <img src="warning.png" width="100px"><br><br>
+            <div class="row">
+                <div class="col-xs-12" style="text-align: center">
+                    <span style="color: #ed7361;;">Do not unplug robot</span><br>
+                    <span style="color: #ed7361;;">Do not refresh web browser</span><br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!---->
+<!--complete dialog-->
+<!---->
+<div id="completeDialog" class="container-fluid" style="display: none">
+    <div class="row" style="margin-top: 5%; text-align: center">
+        <div class="col-xs-12">
+            <span id="uploadedDialog" style="font-size: 32pt; color: #00ffff; display: none">Successfully Uploaded</span>
+            <span id="installedDialog" style="font-size: 32pt; color: #00ffff; display: none">Successfully Installed</span>
+        </div>
+        <br><br><br><br><br>
+        <div class="col-xs-12">
+            <span style="font-size: 16pt; color: #00ffff;">Version</span>
+        </div>
+        <br><br><br><br>
+        <div class="col-xs-12">
+            <img class="" src="fileIcon.png" width="20" style="margin-top: -16px">&nbsp;&nbsp;
+            <span class="fileNameText" style="font-size: 18pt; color: #00ffff;;"></span>&nbsp;&nbsp;
+            <span class="fileType" style="color: #00ffff; cursor: pointer; font-size: 18pt"></span>
+        </div>
+    </div>
+    <div class="col-xs-12" style="text-align: center; margin-bottom: 45px;">
+        <div class="row" style="margin-top: 24%">
+            <div onclick="location.assign('/FtcMenu.html')" class="col-md-6 col-md-push-6" style="cursor: pointer; margin-top: 10px">
+                <img src="primaryButton.png" width="200px"  style="cursor: pointer;">
+                <div style="width: 100%; position: absolute; top: 7px; left: 1px">
+                    <span style="color: #003366; cursor: pointer; font-size: 14pt">Finish</span>
+                </div>
+            </div>
+            <div onclick="location.assign('/FtcSettings.html')" class="col-md-6 col-md-pull-6" style="cursor: pointer; margin-top: 10px">
+                <img  src="primaryButton.png" width="200px" style="cursor: pointer;">
+                <div style="width: 100%; position: absolute; top: 7px; left: 1px">
+                    <span style="color: #003366; cursor: pointer; font-size: 14pt">Back</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+    // The getType() function is dynamically generated.
+
+    var fileInput           = getElement('fileInput');
+    var uploadButton        = getElement('upload');
+    var selection           = getElement('selection');
+    var progressDialog      = getElement('progressDialog');
+    var progressBar         = getElement('progressBar');
+    var initialUploadDialog = getElement('initialUploadDialog');
+    var completeDialog      = getElement('completeDialog');
+    var installAPKDialog    = getElement('installAPKDialog');
+    var warningDialog       = getElement('warningDialog');
+    var uploadedDialog      = getElement('uploadedDialog');
+    var installedDialog     = getElement('installedDialog');
+
+    var fileNameText   = document.getElementsByClassName('fileNameText');
+
+    /**
+     * initialization scheme. called when the body is loaded.
+     */
+    function init() {
+
+        var fileInputChange = function(inputElement, fileName) {
+            var files = inputElement.files;
+            var i;
+
+            if (files[0].name.endsWith(getExtension())) {
+
+                for (i = 0; i < fileName.length; i++) {
+                    fileName[i].innerHTML = files[0].name;
+                }
+
+                if (uploadButton.disabled) {
+                    uploadButton.disabled = (files.length == 0);
+                    uploadButton.onclick = doUpload;
+                }
+            }
+            else {
+                alert("File must be a " + getExtension() + " file.");
+            }
+        };
+
+        var fileTypeElements = document.getElementsByClassName('fileType');
+        var i;
+
+        for (i = 0; i < fileTypeElements.length; i++){
+            fileTypeElements[i].innerHTML = getType();
+        }
+
+        uploadButton.disabled = true;
+        uploadButton.onclick = function() {};
+
+        initNamesAndValues(fileInput, fileNameText, '');
+        fileInput.onchange = function() { fileInputChange(fileInput, fileNameText) };
+    }
+
+    /**
+     *  Get the extension for the type of software
+     */
+    function getExtension() {
+        if (getType() === 'APK'){
+            return ".apk";
+        }
+        if (getType() === 'Firmware'){
+            return ".bin";
+        }
+    }
+
+    /**
+     * Get a dom element based on its unique id.
+     *
+     * @param id - String that is a unique id of a dom element.
+     * @returns {Element}
+     */
+    function getElement(id) {
+        return document.querySelector('#' + id);
+    }
+
+    /**
+     * Action performed when a file selection button is clicked on the 'Upload Updates' dialog
+     * Used to simulate a click event on an Input element with type='file'
+     *
+     * @param id unique id of the Input element
+     */
+    function selectInputFileElement(id) {
+        var fileInput = document.querySelector(id);
+        fileInput.click();
+    }
+
+    /**
+     * Generic initialization for Input with type="file" and associated Label
+     *
+     * @param input Input element with type="file"
+     * @param fileName Label that is associated with the input
+     * @param text initial generic filename String
+     */
+    function initNamesAndValues(input, fileName, text) {
+        input.value = '';
+        input.setAttribute('accept', getExtension());
+        fileName.innerHTML = text;
+    }
+
+    function openDialog(element) {
+        element.style.display = "block";
+    }
+
+    function closeDialog(element) {
+        element.style.display = "none";
+    }
+
+    function doUpload() {
+        var reader = new FileReader();
+        var xhr = new XMLHttpRequest();
+
+        closeDialog(selection);
+        openDialog(progressDialog);
+
+        function apkInstall() {
+
+            var serverFound = false;
+            var id;
+
+            progressBar.style.width = 0 + "";
+            openDialog(installAPKDialog);
+            progressBar.setAttribute("aria-valuemax", (60 * 1.5).toString());
+
+            function startProgress() {
+                var currentWidth = 1;
+                var max = progressBar.getAttribute("aria-valuemax");
+                id = setInterval(function () {
+                    currentWidth += 1;
+                    progressBar.style.width = Math.max((currentWidth/max) * 100) + "%";
+                    console.log(progressBar.style.width);
+                    if (currentWidth >= Number(progressBar.getAttribute("aria-valuemax"))) {
+                        pingRequest();
+                    }
+                    if (serverFound) {
+                        finalize();
+                    }
+                }, 1000);
+            }
+
+            function finalize(){
+                clearInterval(id);
+                closeDialog(warningDialog);
+                closeDialog(progressDialog);
+                closeDialog(installAPKDialog);
+                progressBar.style.width = 0 + "%";
+                progressBar.setAttribute("aria-valuemax", (1).toString());
+                openDialog(completeDialog);
+                openDialog(installedDialog);
+            }
+
+            function pingRequest(){
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            serverFound = true;
+                        }
+                    }
+                };
+
+                xhr.open("GET", "/updatePing");
+                try {
+                    xhr.send();
+                } catch (e){}
+            }
+
+            setTimeout(function(){
+                var xhr = new XMLHttpRequest();
+
+                openDialog(warningDialog);
+                openDialog(progressDialog);
+
+                xhr.onreadystatechange = function() {
+                    if(xhr.readyState === 4) {
+                        if(xhr.status === 200) {
+                            setTimeout(startProgress, 5000);
+                        }
+                    }
+                };
+
+                xhr.open("GET", "/reboot");
+                xhr.send();
+            }, 100);
+        }
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    setTimeout(function(){
+                        closeDialog(progressDialog);
+                        closeDialog(initialUploadDialog);
+
+                        if(getType() === 'Firmware') {
+                            openDialog(completeDialog);
+                            openDialog(uploadedDialog)
+                        }
+                        if(getType() === 'APK') {
+                            apkInstall();
+                        }
+                    }, 1000);
+                } else {
+                    alert('Upload Update Failed ' + xhr.status + '. ' + xhr.statusText);
+                }
+            }
+        };
+
+        xhr.upload.addEventListener("progress", function(e){
+            var loaded = 0;
+            if(e.lengthComputable){
+                loaded = 100 * (e.loaded / e.total);
+                progressBar.style.width = loaded + '%';
+            }
+        }, false);
+
+        xhr.open("POST", "/update" + getType());
+        xhr.setRequestHeader('Content-type', 'application/octet-stream');
+        xhr.overrideMimeType('application/octet-stream');
+        xhr.setRequestHeader('Content-Disposition', 'attachment; ' + 'filename=' + '"' + fileInput.files[0].name + '"');
+        reader.onload = function (evt) {
+            xhr.send(evt.target.result);
+        };
+        reader.readAsArrayBuffer(fileInput.files[0]);
+    }
+</script>
+</html>

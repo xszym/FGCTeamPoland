@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<!--
+  Author: lizlooney@google.com (Liz Looney)
+-->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="bootstrap.min.css" rel="stylesheet"><!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="jquery-3.1.1.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+  <title>FTC - Help</title>
+  <style>
+html, body {
+  height: 100%;
+  margin: 0;
+}
+body {
+  font-family: sans-serif;
+  overflow: hidden;
+  margin: 0px;
+}
+table {
+  border-collapse: collapse;
+}
+button {
+  font-size: small;
+  cursor: pointer;
+}
+.top {
+  background-color:  #081E44;
+}
+.logo_td {
+  padding: 5px;
+}
+.blank_td {
+  background-color: white;
+  padding: 3px;
+}
+  </style>
+</head>
+<body>
+<div class="container-fluid" style="background: #081E44">
+  <div class="row" style="min-height: 40px; max-height: 40px">
+    <div class="col-xs-8">
+      <img onclick="location.assign('/FtcProjects.html')" src="FIRST_RI_logo.png" style="margin-top: 14px; margin-left: 5px" height="11" width="147"/>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <span id="pingFailure"></span>
+    </div>
+    <div class="col-xs-4">
+      <button class="pull-right" id="downloadLogButton" onclick="downloadLogButtonClicked()">Download Log</button>
+    </div>
+  </div>
+</div>
+<table class="top" width="100%">
+  <tr>
+    <td class="blank_td"></td>
+  </tr>
+</table>
+<p>Help content goes here</p>
+</body>
+</html>

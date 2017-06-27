@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "C:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\res\\merged\\debug\\menu\\ftc_robot_controller.xml",
+        "source": "C:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\FtcRobotController\\build\\intermediates\\bundles\\default\\res\\menu\\ftc_robot_controller.xml"
+    },
+    {
+        "merged": "C:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\res\\merged\\debug\\menu\\main_menu.xml",
+        "source": "C:\\Users\\dell\\.android\\build-cache\\2838dfacaa1f7da5eca26093eb3b009bda002763\\output\\res\\menu\\main_menu.xml"
+    },
+    {
+        "merged": "C:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\res\\merged\\debug\\menu\\menu_server.xml",
+        "source": "C:\\Users\\dell\\.android\\build-cache\\095bdb2d9570a106432d7b660356ae54b2c91552\\output\\res\\menu\\menu_server.xml"
+    }
+]

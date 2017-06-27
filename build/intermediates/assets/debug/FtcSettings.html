@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link href="bootstrap.min.css" rel="stylesheet"><!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <title>Settings</title>
+</head>
+<body style="background: #003366" onload="init()">
+<div class="container-fluid" style="background: #081E44">
+    <div class="row" style="min-height: 40px; max-height: 40px">
+        <div class="col-xs-10">
+            <img onclick="location.assign('/FtcMenu.html')" src="FIRST_RI_logo.png" style="margin-top: 14px; margin-left: 5px" height="11" width="147"/>
+        </div>
+        <div class="col-xs-2" onclick="location.assign('/FtcMenu.html')" >
+            <span class="pull-right" style="width: 40px; height: 40px; background-color: #003366; margin-right: 31px; z-index: 100">&nbsp
+            <img class="pull-right" style="margin-top: 5px; margin-right: 5px; background-color: #003366; z-index: 99; cursor: pointer" src="gear.png" height="30" width="30"/>
+            </span>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row" style="margin-top: 2%">
+        <div class="col-md-6" style="text-align: center">
+            <br>
+            <span style="font-size: 24pt; color: white">SOFTWARE</span>
+            <br><br>
+            <div style="text-align: center; border: 2px solid #70f6ff; padding-bottom: 12px">
+                <br>
+                <span style="font-size: 20pt; color: white">Installed Versions</span>
+                <br><br><br>
+                <span style="font-size: 16pt; color:#70f6ff">APK</span>
+                <br>
+                <span id="apkVersion" style="font-size: 16pt; color:#70f6ff"></span>
+                <br><br>
+                <span style="font-size: 16pt; color:#70f6ff">&nbsp;</span>
+                <br>
+                <span id="firmwareVersion" style="font-size: 8pt; color:#70f6ff"></span>
+                <br><br>
+                <div style="border: 1px solid #70f6ff; margin-bottom: 21px"></div>
+                <div class="row">
+                    <div onclick="location.assign('/FtcSoftware.html?type=APK')" class="col-sm-12" style="cursor: pointer">
+                        <img src="primaryButton.png" width="200px" style="cursor: pointer; margin-top: 10px">
+                        <div style="width: 100%; position: absolute; top: 16px; left: 1px">
+                            <span style="color: #003366; cursor: pointer; font-size: 14pt">Update APK</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" style="display: none; cursor: pointer;">
+                        <img src="primaryButton.png" width="200px"  style="cursor: pointer; margin-top: 10px">
+                        <div style="width: 100%; position: absolute; top: 16px; left: 1px">
+                            <span style="color: #003366; cursor: pointer; font-size: 14pt">Update Firmware</span>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div class="col-md-6" style="text-align: center">
+            <br>
+            <span style="font-size: 24pt; color: white">ROBOT INFO</span>
+            <br><br>
+            <div style="text-align: center; border: 2px solid #70f6ff; padding-bottom: 16px">
+                <br>
+                <span style="font-size: 20pt; color: white">Currently Connected To</span>
+                <br><br>
+                <img src="wifi.png" width="48px">
+                <br>
+                <span style="position: relative; font-family: 'Courier New', Courier, monospace; font-size: 20pt; color:#70f6ff;">Wifi network name</span>
+                <br>
+                <span id="networkName" style="font-size: 17pt; color:#70f6ff"></span>
+                <br><br><br>
+                <span style="font-family: 'Courier New', Courier, monospace; font-size: 20pt; color:#70f6ff";>Password</span>
+                <br>
+                <span id="passphrase" style="font-size: 24pt; color:#70f6ff"></span>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function connectionInfo() {
+
+        var networkName = document.querySelector('#networkName');
+        var passphrase  = document.querySelector('#passphrase');
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    networkName.innerHTML = response.networkName;
+                    passphrase.innerHTML  = response.passphrase;
+                }
+                else {
+                    networkName.innerHTML = "Unknown";
+                    passphrase.innerHTML = "Unknown";
+                    alert("You are not connected to the Robot Network");
+                }
+            }
+        };
+
+        xhr.open("GET", "/networkConnectionInfo");
+        xhr.send();
+    }
+
+    function softwareVersionInfo() {
+
+        var apkVersion = document.querySelector('#apkVersion');
+        var firmwareVersion = document.querySelector('#firmwareVersion');
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    apkVersion.innerHTML = response.apkVersion;
+                    firmwareVersion.innerHTML = "&nbsp"; //response.firmwareVersion;
+                }
+                else {
+                    apkVersion.innerHTML = "Unknown";
+                    firmwareVersion.innerHTML = "Unknown";
+                    alert("You are not connected to the Robot Network");
+                }
+            }
+        };
+
+        xhr.open("GET", "/softwareVersions");
+        xhr.send();
+    }
+
+    function init(){
+        connectionInfo();
+        softwareVersionInfo()
+    }
+
+</script>
+</body>
+</html>
