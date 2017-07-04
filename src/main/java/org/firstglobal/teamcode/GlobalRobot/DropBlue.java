@@ -23,8 +23,6 @@ public class DropBlue extends GlobalRobot {
     public void dropBlueLoop() {
         if (gamepad1.b || isRandomBlueBalls()) {
 
-
-
             if (robot.servoBlue.getPosition() > servoBlueZeroPosition - range) {
                 servoBluePosition = servoBlueReversePosition;
             } else if (robot.servoBlue.getPosition() < servoBlueReversePosition + range) {

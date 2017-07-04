@@ -50,16 +50,16 @@ public class GlobalConfiguration extends RobotConfiguration {
     private void initDriveTrain(HardwareMap hardwareMap) {
         //Drive system
             /*Left site*/
-        frontLeft = (DcMotor) getHardwareOn("motor0", hardwareMap.dcMotor);
+        frontLeft = (DcMotor) getHardwareOn("frontLeft", hardwareMap.dcMotor);
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
 
-        rearLeft = (DcMotor) getHardwareOn("motor1", hardwareMap.dcMotor);
+        rearLeft = (DcMotor) getHardwareOn("rearLeft", hardwareMap.dcMotor);
         rearLeft.setDirection(DcMotor.Direction.REVERSE);
 
             /*Right site*/
-        frontRight = (DcMotor) getHardwareOn("motor2", hardwareMap.dcMotor);
+        frontRight = (DcMotor) getHardwareOn("frontRight", hardwareMap.dcMotor);
 
-        rearRight = (DcMotor) getHardwareOn("motor3", hardwareMap.dcMotor);
+        rearRight = (DcMotor) getHardwareOn("rearRight", hardwareMap.dcMotor);
 
     }
 
@@ -67,26 +67,26 @@ public class GlobalConfiguration extends RobotConfiguration {
         //Subsystems
 
         //Motors
-        collectMotor = (DcMotor) getHardwareOn("motor4", hardwareMap.dcMotor);
+        collectMotor = (DcMotor) getHardwareOn("collect", hardwareMap.dcMotor);
 
-        hangingMotor = (DcMotor) getHardwareOn("motor5", hardwareMap.dcMotor);
+        hangingMotor = (DcMotor) getHardwareOn("hanging", hardwareMap.dcMotor);
 
-        openHangingMotor = (DcMotor) getHardwareOn("motor6", hardwareMap.dcMotor);
+        openHangingMotor = (DcMotor) getHardwareOn("openHanging", hardwareMap.dcMotor);
 
         //Servo
-        servoBlue = (Servo) getHardwareOn("servo0", hardwareMap.servo);
+        servoBlue = (Servo) getHardwareOn("servoBlue", hardwareMap.servo);
         servoBlue.setDirection(Servo.Direction.REVERSE);
 
-        servoMill = (Servo) getHardwareOn("servo3", hardwareMap.servo);
-        servoRandom = (Servo) getHardwareOn("servo2", hardwareMap.servo);
+        servoMill = (Servo) getHardwareOn("servoMill", hardwareMap.servo);
+        servoRandom = (Servo) getHardwareOn("servoRandom", hardwareMap.servo);
 
-        servoOrange = (Servo) getHardwareOn("servo1", hardwareMap.servo);
+        servoOrange = (Servo) getHardwareOn("servoOrange", hardwareMap.servo);
 
         //Sensor
 
         colorSensorCenter = (LynxI2cColorRangeSensor) getHardwareOn("colorC", hardwareMap.colorSensor);
 
-        colorSensorBlue = (LynxI2cColorRangeSensor) getHardwareOn("colorB", hardwareMap.colorSensor);
+        //colorSensorBlue = (LynxI2cColorRangeSensor) getHardwareOn("colorB", hardwareMap.colorSensor);
     }
 
     public static GlobalConfiguration newConfig(HardwareMap hardwareMap, Telemetry telemetry) {

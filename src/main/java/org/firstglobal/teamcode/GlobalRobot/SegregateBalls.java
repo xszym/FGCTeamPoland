@@ -12,11 +12,12 @@ public class SegregateBalls extends GlobalRobot {
 
     private DropOrange dropOrange;
     private DropBlue dropBlue;
-    private 
+    private RandomBallsUp randomBallsUp;
 
     public SegregateBalls() {
         dropOrange = new DropOrange();
         dropBlue = new DropBlue();
+        randomBallsUp = new RandomBallsUp();
     }
 
     public void segregateLoop() {
@@ -32,6 +33,8 @@ public class SegregateBalls extends GlobalRobot {
                 millServoPosition(GlobalRobot.SERVOMILLCENTER - 0.1);
             }
 
+
+
         } else {
 
             if (distanceL < 20) {
@@ -43,8 +46,11 @@ public class SegregateBalls extends GlobalRobot {
                     millServoPosition(GlobalRobot.SERVOMILLCENTER - 0.15);
                     dropOrange.setRandomOrangeBalls(true);
                 }
-            } else {
 
+                randomBallsUp.setRandom(false);
+
+            } else {
+                randomBallsUp.setRandom(true);
                 dropBlue.setRandomBlueBalls(false);
                 dropOrange.setRandomOrangeBalls(false);
                 millServoPosition(GlobalRobot.SERVOMILLCENTER);

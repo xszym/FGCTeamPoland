@@ -16,10 +16,12 @@ public class OurRobotConfiguration2 extends RobotConfiguration {
     public DcMotor rearRight;
     public DcMotor rearLeft;
     public DcMotor collectMotor;
-    //    public DcMotor collectMotor2;
     public DcMotor hangingMotor;
     public DcMotor openHangingMotor;
+    public DcMotor randomMotor;
     public LynxI2cColorRangeSensor colorSensorCenter;
+   // public LynxI2cColorRangeSensor colorSensorRight;
+    public LynxI2cColorRangeSensor colorSensorLeft;
     public Servo servoB;
     public Servo servoO;
     public Servo servoMill;
@@ -32,35 +34,44 @@ public class OurRobotConfiguration2 extends RobotConfiguration {
         setTelemetry(telemetry);
 
         //Drive system
-        frontLeft = (DcMotor) getHardwareOn("motor0", hardwareMap.dcMotor);
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontLeft = (DcMotor) getHardwareOn("frontLeft", hardwareMap.dcMotor);
+        //frontLeft.setDirection(DcMotor.Direction.REVERSE);
 
-        rearLeft = (DcMotor) getHardwareOn("motor1", hardwareMap.dcMotor);
+        rearLeft = (DcMotor) getHardwareOn("rearLeft", hardwareMap.dcMotor);
         rearLeft.setDirection(DcMotor.Direction.REVERSE);
 
-        frontRight = (DcMotor) getHardwareOn("motor2", hardwareMap.dcMotor);
+        frontRight = (DcMotor) getHardwareOn("frontRight", hardwareMap.dcMotor);
 
-        rearRight = (DcMotor) getHardwareOn("motor3", hardwareMap.dcMotor);
+        rearRight = (DcMotor) getHardwareOn("rearRight", hardwareMap.dcMotor);
 
         //Collect balls
-        collectMotor = (DcMotor) getHardwareOn("motor4", hardwareMap.dcMotor);
+        collectMotor = (DcMotor) getHardwareOn("collect", hardwareMap.dcMotor);
+
+
+
+        randomMotor = (DcMotor) getHardwareOn("randomMotor", hardwareMap.dcMotor);
+
+
+
 
         //       collectMotor2 = (DcMotor) getHardwareOn("motor7", hardwareMap.dcMotor);
 
-        hangingMotor = (DcMotor) getHardwareOn("motor5", hardwareMap.dcMotor);
+        hangingMotor = (DcMotor) getHardwareOn("hanging", hardwareMap.dcMotor);
 
-        openHangingMotor = (DcMotor) getHardwareOn("motor6", hardwareMap.dcMotor);
+        openHangingMotor = (DcMotor) getHardwareOn("openHanging", hardwareMap.dcMotor);
 
         colorSensorCenter = (LynxI2cColorRangeSensor) getHardwareOn("colorC", hardwareMap.colorSensor);
+        //colorSensorRight = (LynxI2cColorRangeSensor) getHardwareOn("colorR", hardwareMap.colorSensor);
+        colorSensorLeft = (LynxI2cColorRangeSensor) getHardwareOn("colorL", hardwareMap.colorSensor);
 
-        servoO = (Servo) getHardwareOn("servo1", hardwareMap.servo);
+        servoO = (Servo) getHardwareOn("servoOrange", hardwareMap.servo);
 
-        servoB = (Servo) getHardwareOn("servo0", hardwareMap.servo);
+        servoB = (Servo) getHardwareOn("servoBlue", hardwareMap.servo);
         servoB.setDirection(Servo.Direction.REVERSE);
 
-        servoMill = (Servo) getHardwareOn("servo3", hardwareMap.servo);
+        servoMill = (Servo) getHardwareOn("servoMill", hardwareMap.servo);
 
-        servoRandom = (Servo) getHardwareOn("servo2", hardwareMap.servo);
+        servoRandom = (Servo) getHardwareOn("servoRandom", hardwareMap.servo);
 
 
     }

@@ -7,15 +7,19 @@ import org.firstglobal.teamcode.configurations.OurRobotConfiguration2;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
-@TeleOp(group = "OurRobot")
+@TeleOp(group = "OurRobot3")
 
 public class OurRobot2 extends FGOpMode {
 
+
     private OurRobotConfiguration2 robot;
-    private boolean wasBlue = false;
-    private boolean wasRed = false;
     private double servoMillCenter = 0.50;
-    private int openHangingMotorStartPosition;
+    private boolean isRandomBalls = false;
+    private boolean isRandomBlue = false;
+    private boolean isRandomOrange = false;
+    private boolean isSort = true;
+    private int randomMotorStartPosition = 0;
+    private int oldRandomMotorPosition;
 
     @Override
     protected void onInit() {
@@ -24,7 +28,8 @@ public class OurRobot2 extends FGOpMode {
         robot.servoMill.setPosition(servoMillCenter);
         robot.servoO.setPosition(0.3);
         robot.servoB.setPosition(0.38);
-        openHangingMotorStartPosition = robot.openHangingMotor.getCurrentPosition();
+        randomMotorStartPosition = robot.randomMotor.getCurrentPosition();
+        oldRandomMotorPosition = robot.randomMotor.getCurrentPosition();
     }
 
 
@@ -39,7 +44,6 @@ public class OurRobot2 extends FGOpMode {
 
     protected void activeLoop() throws InterruptedException {
 
-
         drive();
 
         collect();
@@ -50,25 +54,29 @@ public class OurRobot2 extends FGOpMode {
 
         randomBallsUp();
 
-        // robot.collectMotor2.setPower(-gamepad1.left_trigger);
+        try {
+            double distanceL = robot.colorSensorCenter.getDistance(DistanceUnit.CM);
 
-        double distanceL = robot.colorSensorCenter.getDistance(DistanceUnit.CM);
+            int state = 1;
 
-        int state = 1;
+            if (state == 1) {
+                sortBalls(distanceL);
+                state = 2;
+            } else if (state == 2) {
+                state = 1;
+            }
 
-        if (state == 1) {
-            sortBalls(distanceL);
-            state = 2;
-        } else if (state == 2) {
-            state = 1;
+
+            telemetry.addData("Cm:   ", distanceL);
+            telemetry.addData("red", robot.colorSensorCenter.red());
+            telemetry.addData("blue", robot.colorSensorCenter.blue());
+            telemetry.addData("green", robot.colorSensorCenter.green());
+            telemetry.addData("alpha", robot.colorSensorCenter.alpha());
+        } catch (Exception e) {
+
         }
 
 
-        telemetry.addData("Cm:   ", distanceL);
-        telemetry.addData("red", robot.colorSensorCenter.red());
-        telemetry.addData("blue", robot.colorSensorCenter.blue());
-        telemetry.addData("green", robot.colorSensorCenter.green());
-        telemetry.addData("alpha", robot.colorSensorCenter.alpha());
         telemetry.update();
 
         idle();
@@ -76,38 +84,87 @@ public class OurRobot2 extends FGOpMode {
     }
 
     private void randomBallsUp() {
-        if (gamepad2.a || gamepad1.a) {
-            robot.servoRandom.setPosition(0);
+        int curretRandomMotorPosition = robot.randomMotor.getCurrentPosition();
+        double roznica = curretRandomMotorPosition - oldRandomMotorPosition;
+        if (isRandomBalls()) {
+            double speedRandomMotorSpeed = 0.3;
+
+            if (Math.abs(roznica) < 20) {
+                speedRandomMotorSpeed = 1;
+            }
+
+            try {
+                if (robot.colorSensorLeft.getDistance(DistanceUnit.CM) < 70) {
+                    speedRandomMotorSpeed = speedRandomMotorSpeed * -1;
+                    telemetry.addData("robot.colorSensorLeft distance", robot.colorSensorLeft.getDistance(DistanceUnit.CM));
+                }
+            } catch (Exception e){
+
+            }
+
+
+            robot.randomMotor.setPower(-speedRandomMotorSpeed);
+
+
         } else {
-            robot.servoRandom.setPosition(0.1);
+            robot.randomMotor.setPower(0);
         }
+
+        telemetry.addData("motor random position:   ", robot.randomMotor.getCurrentPosition());
+        telemetry.addData("roznica:   ", roznica);
+        oldRandomMotorPosition = robot.randomMotor.getCurrentPosition();
     }
+
+
 
     private void sortBalls(double distanceL) {
 
 
-        if (gamepad1.left_bumper || gamepad2.left_bumper || gamepad1.right_bumper || gamepad2.right_bumper) {
 
-            if (gamepad1.left_bumper || gamepad2.left_bumper) {
-                millServoPosition(servoMillCenter + 0.15);
-            } else if (gamepad1.right_bumper || gamepad2.right_bumper) {
-                millServoPosition(servoMillCenter - 0.1);
-            }
+        if (gamepad2.a || gamepad1.a){
+            isSort = true;
+        } else if(gamepad2.start || gamepad1.start) {
+            isSort = false;
+        }
+
+
+        if (!isSort) {
+            millServoPosition(servoMillCenter);
+            setRandomBalls(false);
 
         } else {
+            if (gamepad1.left_bumper || gamepad2.left_bumper || gamepad1.right_bumper || gamepad2.right_bumper) {
 
-            if (distanceL < 20) {
-                if (robot.colorSensorCenter.blue() > robot.colorSensorCenter.red() ||
-                        robot.colorSensorCenter.green() > robot.colorSensorCenter.red())
-
-                {
-                    millServoPosition(servoMillCenter + 0.2);
-                } else {
-                    millServoPosition(servoMillCenter - 0.15);
+                if (gamepad1.left_bumper || gamepad2.left_bumper) {
+                    millServoPosition(servoMillCenter + 0.15);
+                } else if (gamepad1.right_bumper || gamepad2.right_bumper) {
+                    millServoPosition(servoMillCenter - 0.1);
                 }
+
             } else {
 
-                millServoPosition(servoMillCenter);
+
+
+                if (distanceL < 8) {
+
+                    if (robot.colorSensorCenter.blue() > robot.colorSensorCenter.red() + 5) {
+                        millServoPosition(servoMillCenter + 0.15);
+                        setRandomBlue(true);
+                    } else if (robot.colorSensorCenter.red() > robot.colorSensorCenter.blue() + 5){
+                        millServoPosition(servoMillCenter - 0.1);
+                        setRandomOrange(true);
+                    }
+
+                } else {
+
+                    millServoPosition(servoMillCenter);
+                    setRandomBalls(true);
+
+                    if (distanceL < 45){
+                        setRandomBalls(false);
+                    }
+
+                }
             }
         }
     }
@@ -120,30 +177,35 @@ public class OurRobot2 extends FGOpMode {
 
 
         double servoOrangeOpenPosition = 0.6;
-        double servoOrangeZeroPosition = 0.3;
-        double servoOrangeReversePosition = 0.1;
+        double servoOrangeZeroPosition = 0.35;
+        double servoOrangeReversePosition = 0.23;
 
-        double servoBlueOpenPosition = 0.65;
-        double servoBlueZeroPosition = 0.38;
-        double servoBlueReversePosition = 0.1;
+        double servoBlueOpenPosition = 0.75;
+        double servoBlueZeroPosition = 0.45;
+        double servoBlueReversePosition = 0.25;
 
-        if (gamepad1.b) {
-
-            if (robot.servoB.getPosition() > servoBlueZeroPosition - 0.05) {
-                robot.servoB.setPosition(servoBlueReversePosition);
-            } else if (robot.servoB.getPosition() < servoBlueReversePosition + 0.05) {
-                robot.servoB.setPosition(servoBlueZeroPosition);
+        if (gamepad1.b || isRandomOrange() || isRandomBlue()) {
+            if (gamepad1.b || isRandomBlue()) {
+                if (robot.servoB.getPosition() > servoBlueZeroPosition - 0.05) {
+                    robot.servoB.setPosition(servoBlueReversePosition);
+                    setRandomBlue(false);
+                } else if (robot.servoB.getPosition() < servoBlueReversePosition + 0.05) {
+                    robot.servoB.setPosition(servoBlueZeroPosition);
+                }
             }
 
-            if (robot.servoO.getPosition() > servoOrangeZeroPosition - 0.05) {
-                robot.servoO.setPosition(servoOrangeReversePosition);
-            } else if (robot.servoO.getPosition() < servoOrangeReversePosition + 0.05) {
-                robot.servoO.setPosition(servoOrangeZeroPosition);
+            if (gamepad1.b || isRandomOrange()) {
+                if (robot.servoO.getPosition() > servoOrangeZeroPosition - 0.05) {
+                    robot.servoO.setPosition(servoOrangeReversePosition);
+                    setRandomOrange(false);
+                } else if (robot.servoO.getPosition() < servoOrangeReversePosition + 0.05) {
+                    robot.servoO.setPosition(servoOrangeZeroPosition);
+                }
             }
-
         } else {
             robot.servoB.setPosition(servoBlueZeroPosition);
             robot.servoO.setPosition(servoOrangeZeroPosition);
+            robot.servoRandom.setPosition(0.1);
         }
 
         //ORANGE
@@ -162,6 +224,7 @@ public class OurRobot2 extends FGOpMode {
 
         } else if (gamepad1.x || gamepad2.x) {
             robot.servoB.setPosition(servoBlueOpenPosition);
+            robot.servoRandom.setPosition(0.5);
         }
 
     }
@@ -184,7 +247,6 @@ public class OurRobot2 extends FGOpMode {
             robot.openHangingMotor.setPower(0);
         }
 
-
     }
 
     private void collect() {
@@ -196,40 +258,54 @@ public class OurRobot2 extends FGOpMode {
         }
         robot.collectMotor.setPower(-collectPower);
 
-
     }
 
     private void drive() {
+
         double leftStickY = gamepad1.left_stick_y;
         double rightStickX = gamepad1.right_stick_x;
 
-//        if(Math.abs(rightStickX) > 0.5){
-//
-//            //Prawa
-//            if(rightStickX>0.5){
-//                robot.rearLeft.setPower(leftStickY + rightStickX);
-//                robot.frontRight.setPower(leftStickY - rightStickX);
-//            } else if(rightStickX < -0.5){
-//                robot.rearRight.setPower(leftStickY - rightStickX);
-//                robot.frontLeft.setPower(leftStickY + rightStickX);
-//            }
-//
-//
-//
-//        } else {
-        robot.frontLeft.setPower(leftStickY - rightStickX);
-        robot.rearLeft.setPower(leftStickY - rightStickX);
+        if (gamepad1.right_bumper) {
+            robot.frontLeft.setPower(0);
+            robot.rearLeft.setPower(0);
 
-        robot.frontRight.setPower(leftStickY + rightStickX);
-        robot.rearRight.setPower(leftStickY + rightStickX);
-//        }
-        telemetry.addData("left ", leftStickY);
-        telemetry.addData("right ", rightStickX);
+            robot.frontRight.setPower(0);
+            robot.rearRight.setPower(0);
+        } else {
+            robot.frontLeft.setPower(leftStickY - rightStickX);
+            robot.rearLeft.setPower(leftStickY - rightStickX);
 
+            robot.frontRight.setPower(leftStickY + rightStickX);
+            robot.rearRight.setPower(leftStickY + rightStickX);
+
+        }
 
     }
 
 
+    public boolean isRandomBalls() {
+        return isRandomBalls;
+    }
+
+    public void setRandomBalls(boolean randomBalls) {
+        isRandomBalls = randomBalls;
+    }
+
+    public boolean isRandomBlue() {
+        return isRandomBlue;
+    }
+
+    public void setRandomBlue(boolean randomBlue) {
+        isRandomBlue = randomBlue;
+    }
+
+    public boolean isRandomOrange() {
+        return isRandomOrange;
+    }
+
+    public void setRandomOrange(boolean randomOrange) {
+        isRandomOrange = randomOrange;
+    }
 }
 
 

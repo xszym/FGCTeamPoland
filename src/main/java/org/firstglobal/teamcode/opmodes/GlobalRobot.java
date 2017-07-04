@@ -91,12 +91,7 @@ public class GlobalRobot extends FGOpMode {
         telemetry.addData("green", robot.colorSensorCenter.green());
         telemetry.addData("alpha", robot.colorSensorCenter.alpha());
         telemetry.addData("   ", "");
-        telemetry.addData("Sensor:   ", "Lewy");
-        telemetry.addData("Cm:   ", robot.colorSensorBlue.getDistance(DistanceUnit.CM));
-        telemetry.addData("red", robot.colorSensorBlue.red());
-        telemetry.addData("blue", robot.colorSensorBlue.blue());
-        telemetry.addData("green", robot.colorSensorBlue.green());
-        telemetry.addData("alpha", robot.colorSensorBlue.alpha());
+
         telemetry.update();
 
         idle();

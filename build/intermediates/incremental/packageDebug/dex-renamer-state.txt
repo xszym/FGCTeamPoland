@@ -1,4 +1,4 @@
-#Mon Jun 26 18:31:06 CEST 2017
+#Tue Jul 04 16:24:08 CEST 2017
 base.0=C\:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
 renamed.0=classes.dex
 file.0=C\:\\Programowanie\\Java\\FIRST Global\\ftc_app-1.1\\TeamCode\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex
