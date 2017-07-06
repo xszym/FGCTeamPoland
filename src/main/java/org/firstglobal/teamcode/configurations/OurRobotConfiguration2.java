@@ -21,7 +21,7 @@ public class OurRobotConfiguration2 extends RobotConfiguration {
     public DcMotor randomMotor;
     public LynxI2cColorRangeSensor colorSensorCenter;
    // public LynxI2cColorRangeSensor colorSensorRight;
-    public LynxI2cColorRangeSensor colorSensorLeft;
+   // public LynxI2cColorRangeSensor colorSensorLeft;
     public Servo servoB;
     public Servo servoO;
     public Servo servoMill;
@@ -62,7 +62,7 @@ public class OurRobotConfiguration2 extends RobotConfiguration {
 
         colorSensorCenter = (LynxI2cColorRangeSensor) getHardwareOn("colorC", hardwareMap.colorSensor);
         //colorSensorRight = (LynxI2cColorRangeSensor) getHardwareOn("colorR", hardwareMap.colorSensor);
-        colorSensorLeft = (LynxI2cColorRangeSensor) getHardwareOn("colorL", hardwareMap.colorSensor);
+        //colorSensorLeft = (LynxI2cColorRangeSensor) getHardwareOn("colorL", hardwareMap.colorSensor);
 
         servoO = (Servo) getHardwareOn("servoOrange", hardwareMap.servo);
 

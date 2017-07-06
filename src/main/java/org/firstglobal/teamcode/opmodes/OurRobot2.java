@@ -18,7 +18,7 @@ public class OurRobot2 extends FGOpMode {
     private boolean isRandomBlue = false;
     private boolean isRandomOrange = false;
     private boolean isSort = true;
-    private int randomMotorStartPosition = 0;
+
     private int oldRandomMotorPosition;
 
     @Override
@@ -28,7 +28,6 @@ public class OurRobot2 extends FGOpMode {
         robot.servoMill.setPosition(servoMillCenter);
         robot.servoO.setPosition(0.3);
         robot.servoB.setPosition(0.38);
-        randomMotorStartPosition = robot.randomMotor.getCurrentPosition();
         oldRandomMotorPosition = robot.randomMotor.getCurrentPosition();
     }
 
@@ -75,7 +74,14 @@ public class OurRobot2 extends FGOpMode {
         } catch (Exception e) {
 
         }
+     //   telemetry.addData("color L status", robot.colorSensorLeft.status());
+        telemetry.addData("color C status", robot.colorSensorCenter.status());
 
+        // robot.colorSensorLeft.resetDeviceConfigurationForOpMode();
+         robot.colorSensorCenter.resetDeviceConfigurationForOpMode();
+
+       // telemetry.addData("color L status", robot.colorSensorLeft.status());
+        telemetry.addData("color C status", robot.colorSensorCenter.status());
 
         telemetry.update();
 
@@ -89,18 +95,18 @@ public class OurRobot2 extends FGOpMode {
         if (isRandomBalls()) {
             double speedRandomMotorSpeed = 0.3;
 
-            if (Math.abs(roznica) < 20) {
+            if (Math.abs(roznica) < 50) {
                 speedRandomMotorSpeed = 1;
             }
 
-            try {
-                if (robot.colorSensorLeft.getDistance(DistanceUnit.CM) < 70) {
-                    speedRandomMotorSpeed = speedRandomMotorSpeed * -1;
-                    telemetry.addData("robot.colorSensorLeft distance", robot.colorSensorLeft.getDistance(DistanceUnit.CM));
-                }
-            } catch (Exception e){
-
-            }
+//            try {
+//                if (robot.colorSensorLeft.getDistance(DistanceUnit.CM) < 70) {
+//                    speedRandomMotorSpeed = speedRandomMotorSpeed * -1;
+//                    telemetry.addData("robot.colorSensorLeft distance", robot.colorSensorLeft.getDistance(DistanceUnit.CM));
+//                }
+//            } catch (Exception e) {
+//
+//        }
 
 
             robot.randomMotor.setPower(-speedRandomMotorSpeed);
@@ -116,14 +122,12 @@ public class OurRobot2 extends FGOpMode {
     }
 
 
-
     private void sortBalls(double distanceL) {
 
 
-
-        if (gamepad2.a || gamepad1.a){
+        if (gamepad2.a || gamepad1.a) {
             isSort = true;
-        } else if(gamepad2.start || gamepad1.start) {
+        } else if (gamepad2.start || gamepad1.start) {
             isSort = false;
         }
 
@@ -132,40 +136,37 @@ public class OurRobot2 extends FGOpMode {
             millServoPosition(servoMillCenter);
             setRandomBalls(false);
 
+            if (gamepad1.left_bumper || gamepad2.left_bumper) {
+                millServoPosition(servoMillCenter + 0.15);
+            } else if (gamepad1.right_bumper || gamepad2.right_bumper) {
+                millServoPosition(servoMillCenter - 0.1);
+            }
         } else {
-            if (gamepad1.left_bumper || gamepad2.left_bumper || gamepad1.right_bumper || gamepad2.right_bumper) {
+            if (gamepad1.left_bumper || gamepad2.left_bumper) {
+                millServoPosition(servoMillCenter + 0.15);
+            } else if (gamepad1.right_bumper || gamepad2.right_bumper) {
+                millServoPosition(servoMillCenter - 0.1);
+            } else if (distanceL < 8) {
 
-                if (gamepad1.left_bumper || gamepad2.left_bumper) {
+                if (robot.colorSensorCenter.blue() > robot.colorSensorCenter.red() + 5) {
                     millServoPosition(servoMillCenter + 0.15);
-                } else if (gamepad1.right_bumper || gamepad2.right_bumper) {
+                    setRandomBlue(true);
+                } else if (robot.colorSensorCenter.red() > robot.colorSensorCenter.blue() + 5) {
                     millServoPosition(servoMillCenter - 0.1);
+                    setRandomOrange(true);
                 }
 
             } else {
 
-
+                millServoPosition(servoMillCenter);
+                setRandomBalls(true);
 
                 if (distanceL < 8) {
-
-                    if (robot.colorSensorCenter.blue() > robot.colorSensorCenter.red() + 5) {
-                        millServoPosition(servoMillCenter + 0.15);
-                        setRandomBlue(true);
-                    } else if (robot.colorSensorCenter.red() > robot.colorSensorCenter.blue() + 5){
-                        millServoPosition(servoMillCenter - 0.1);
-                        setRandomOrange(true);
-                    }
-
-                } else {
-
-                    millServoPosition(servoMillCenter);
-                    setRandomBalls(true);
-
-                    if (distanceL < 45){
-                        setRandomBalls(false);
-                    }
-
+                    setRandomBalls(false);
                 }
+
             }
+
         }
     }
 
@@ -176,16 +177,16 @@ public class OurRobot2 extends FGOpMode {
     private void dropBalls() {
 
 
-        double servoOrangeOpenPosition = 0.6;
+        double servoOrangeOpenPosition = 0.65;
         double servoOrangeZeroPosition = 0.35;
         double servoOrangeReversePosition = 0.23;
 
-        double servoBlueOpenPosition = 0.75;
+        double servoBlueOpenPosition = 0.80;
         double servoBlueZeroPosition = 0.45;
         double servoBlueReversePosition = 0.25;
 
-        if (gamepad1.b || isRandomOrange() || isRandomBlue()) {
-            if (gamepad1.b || isRandomBlue()) {
+        if (gamepad2.b || isRandomOrange() || isRandomBlue()) {
+            if (gamepad2.b || isRandomBlue()) {
                 if (robot.servoB.getPosition() > servoBlueZeroPosition - 0.05) {
                     robot.servoB.setPosition(servoBlueReversePosition);
                     setRandomBlue(false);
@@ -194,7 +195,7 @@ public class OurRobot2 extends FGOpMode {
                 }
             }
 
-            if (gamepad1.b || isRandomOrange()) {
+            if (gamepad2.b || isRandomOrange()) {
                 if (robot.servoO.getPosition() > servoOrangeZeroPosition - 0.05) {
                     robot.servoO.setPosition(servoOrangeReversePosition);
                     setRandomOrange(false);
@@ -205,7 +206,7 @@ public class OurRobot2 extends FGOpMode {
         } else {
             robot.servoB.setPosition(servoBlueZeroPosition);
             robot.servoO.setPosition(servoOrangeZeroPosition);
-            robot.servoRandom.setPosition(0.1);
+            robot.servoRandom.setPosition(0);
         }
 
         //ORANGE
@@ -224,7 +225,7 @@ public class OurRobot2 extends FGOpMode {
 
         } else if (gamepad1.x || gamepad2.x) {
             robot.servoB.setPosition(servoBlueOpenPosition);
-            robot.servoRandom.setPosition(0.5);
+            robot.servoRandom.setPosition(0.3);
         }
 
     }
@@ -233,13 +234,13 @@ public class OurRobot2 extends FGOpMode {
 
         if (gamepad1.dpad_down || gamepad2.dpad_down) {
             //SKLADANIE
-            robot.hangingMotor.setPower(-1);
-            robot.openHangingMotor.setPower(0.2);
+            robot.hangingMotor.setPower(1);
+            robot.openHangingMotor.setPower(-0.2);
         } else if (gamepad1.dpad_up || gamepad2.dpad_up) {
             //ROZKLADANIE
 
-            robot.hangingMotor.setPower(1);
-            robot.openHangingMotor.setPower(-0.35);
+            robot.hangingMotor.setPower(-1);
+            robot.openHangingMotor.setPower(0.4);
 
 
         } else {
@@ -253,9 +254,10 @@ public class OurRobot2 extends FGOpMode {
         double collectPower = 0;
         if (gamepad2.right_trigger != 0) {
             collectPower = gamepad2.right_trigger;
-        } else if (gamepad1.right_trigger != 0) {
-            collectPower = gamepad1.right_trigger;
         }
+//        else if (gamepad1.right_trigger != 0) {
+//            collectPower = gamepad1.right_trigger;
+//        }
         robot.collectMotor.setPower(-collectPower);
 
     }
@@ -264,21 +266,18 @@ public class OurRobot2 extends FGOpMode {
 
         double leftStickY = gamepad1.left_stick_y;
         double rightStickX = gamepad1.right_stick_x;
+        double rightTrigger = gamepad1.right_trigger;
 
-        if (gamepad1.right_bumper) {
-            robot.frontLeft.setPower(0);
-            robot.rearLeft.setPower(0);
 
-            robot.frontRight.setPower(0);
-            robot.rearRight.setPower(0);
-        } else {
-            robot.frontLeft.setPower(leftStickY - rightStickX);
-            robot.rearLeft.setPower(leftStickY - rightStickX);
+        rightTrigger = rightTrigger + 1;
+        telemetry.addData("right trigger", rightTrigger);
 
-            robot.frontRight.setPower(leftStickY + rightStickX);
-            robot.rearRight.setPower(leftStickY + rightStickX);
+        robot.frontLeft.setPower(((leftStickY - rightStickX) * rightTrigger) / 2);
+        robot.rearLeft.setPower(((leftStickY - rightStickX) * rightTrigger) / 2);
 
-        }
+        robot.frontRight.setPower(((leftStickY + rightStickX) * rightTrigger) / 2);
+
+        robot.rearRight.setPower(((leftStickY + rightStickX) * rightTrigger) / 2);
 
     }
 
